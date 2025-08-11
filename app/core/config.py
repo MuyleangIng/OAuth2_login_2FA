@@ -14,6 +14,6 @@ ISSUER_NAME = os.getenv("ISSUER_NAME", "Qummit")
 
 GOOGLE_CLIENT_ID = "48242718990-2rlm0qal247bm1deq8p9l8eajracsp2f.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "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"
-GOOGLE_REDIRECT_URI = "http://localhost:8000/auth/google/callback"
+GOOGLE_REDIRECT_URI = "https://google.dqummit.work/auth/google/callback"
 JWT_SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"

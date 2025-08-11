@@ -11,7 +11,7 @@ app = FastAPI(title="FastAPI Google OAuth")
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000", "http://localhost"],
+    allow_origins=["http://localhost:8000", "http://localhost","https://google.dqummit.work/auth/login","https://google.dqummit.work"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
