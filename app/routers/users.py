@@ -35,7 +35,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 PENDING_COOKIE = "pending_user"
 ACCESS_COOKIE = "access_token"
-COOKIE_OPTS = dict(httponly=True, samesite="lax", secure=False)  # set secure=True on HTTPS
+# routes.py
+COOKIE_OPTS = dict(httponly=True, samesite="lax", secure=True)  # Cloud Run is HTTPS
 
 DEV_MODE = os.getenv("DEV_MODE") == "1"
 
