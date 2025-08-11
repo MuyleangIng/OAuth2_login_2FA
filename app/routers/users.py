@@ -147,22 +147,42 @@ async def mfa_verify_json(request: Request, payload: dict = Body(...), db: Sessi
 
 # ---------- 2FA enrollment ----------
 @router.get("/2fa/setup", response_class=HTMLResponse)
-async def twofa_setup(request: Request, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+async def twofa_setup(
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
     user = db.query(UserModel).filter(UserModel.email == current_user["email"]).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
+    # Create TOTP secret if missing
     if not user.totp_secret or not user.totp_enabled:
         if not user.totp_secret:
             user.totp_secret = create_totp_secret()
-            db.add(user); db.commit(); db.refresh(user)
+            db.add(user)
+            db.commit()
+            db.refresh(user)
 
     uri = totp_uri(user.totp_secret, user.email)
+
     buf = io.BytesIO()
-    qrcode.make(uri).save(buf, format="PNG")
+    qr_img = qrcode.make(uri)
+
+    try:
+        # Try Pillow backend
+        qr_img.save(buf, format="PNG")
+    except TypeError:
+        # Fallback to PyPNG backend
+        qr_img.save(buf)
+
     qr_b64 = base64.b64encode(buf.getvalue()).decode()
 
-    return templates.TemplateResponse("2fa_setup.html", {"request": request, "qr_b64": qr_b64, "otpauth_uri": uri})
+    return templates.TemplateResponse(
+        "2fa_setup.html",
+        {"request": request, "qr_b64": qr_b64, "otpauth_uri": uri}
+    )
+
 
 @router.post("/2fa/activate", response_class=HTMLResponse)
 async def twofa_activate(request: Request, code: str = Form(...), current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
