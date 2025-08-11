@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-2">Users</h1>
+<p class="text-gray-600 mb-6">All registered users.</p>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full text-sm">
+    <thead>
+      <tr class="text-left border-b">
+        <th class="py-2 pr-4">Avatar</th>
+        <th class="py-2 pr-4">Name</th>
+        <th class="py-2 pr-4">Email</th>
+        <th class="py-2 pr-4">2FA</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr class="border-b">
+        <td class="py-2 pr-4">
+          {% if u.picture %}
+            <img src="{{ u.picture }}" alt="" class="w-8 h-8 rounded-full border" />
+          {% else %}
+            <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+          {% endif %}
+        </td>
+        <td class="py-2 pr-4">{{ u.name or "-" }}</td>
+        <td class="py-2 pr-4">{{ u.email }}</td>
+        <td class="py-2 pr-4">
+          {% if u.totp_enabled %}<span class="text-green-600">Enabled</span>{% else %}<span class="text-gray-400">Off</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

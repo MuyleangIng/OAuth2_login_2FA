@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}2-Step Verification Activated{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-2">2-Step Verification Activated</h1>
+<p class="text-gray-600 mb-4">Save these backup codes in a secure place. Each code can be used once.</p>
+<ul class="grid grid-cols-2 gap-2 font-mono text-sm bg-gray-50 p-4 rounded-xl">
+  {% for c in codes %}
+    <li class="px-3 py-2 bg-white rounded border">{{ c }}</li>
+  {% endfor %}
+</ul>
+<a href="/auth/success" class="block text-center mt-6 px-4 py-2 rounded-xl bg-black text-white hover:bg-gray-800">
+  Continue
+</a>
+{% endblock %}

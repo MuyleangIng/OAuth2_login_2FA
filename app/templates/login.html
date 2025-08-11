@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-2">Sign in</h1>
+<p class="text-gray-600 mb-6">Choose a method to continue.</p>
+
+{% set auth_url = (
+  "https://accounts.google.com/o/oauth2/v2/auth"
+  + "?response_type=code"
+  + "&client_id=" + google_client_id
+  + "&redirect_uri=" + google_redirect_uri
+  + "&scope=" + "email%20profile"
+  + "&access_type=offline"
+  + "&prompt=consent"
+) %}
+<a href="{{ auth_url }}"
+   class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black text-white hover:bg-gray-800">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.61 20.08H42V20H24v8h11.32C33.77 31.66 29.39 35 24 35c-6.63 0-12-5.37-12-12s5.37-12 12-12c3.06 0 5.85 1.16 7.96 3.06l5.66-5.66C34.46 5.14 29.47 3 24 3 12.95 3 4 11.95 4 23s8.95 20 20 20 19-8.95 19-20c0-1.34-.14-2.65-.39-3.92z"/><path fill="#FF3D00" d="M6.31 14.69l6.57 4.82C14.28 16.2 18.77 13 24 13c3.06 0 5.85 1.16 7.96 3.06l5.66-5.66C34.46 5.14 29.47 3 24 3 16.11 3 9.22 7.44 6.31 14.69z"/><path fill="#4CAF50" d="M24 43c5.33 0 10.25-2.04 13.94-5.36l-6.44-5.46C29.37 33.94 26.82 35 24 35c-5.36 0-9.86-3.42-11.46-8.17l-6.52 5.02C8.88 38.59 15.89 43 24 43z"/><path fill="#1976D2" d="M43.61 20.08H42V20H24v8h11.32c-1.02 2.99-3.18 5.47-5.9 6.98l6.44 5.46C38.02 37.58 43 31.64 43 23c0-1.34-.14-2.65-.39-3.92z"/></svg>
+  Continue with Google
+</a>
+
+<hr class="my-6"/>
+
+<p class="text-sm text-gray-500">If your account has 2-Step Verification enabled, you’ll be asked for a 6-digit code after login.</p>
+{% endblock %}

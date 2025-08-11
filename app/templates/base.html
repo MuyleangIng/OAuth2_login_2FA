@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Auth{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-xl">
+      <div class="bg-white shadow rounded-2xl p-6">
+        {% block content %}{% endblock %}
+      </div>
+      <p class="text-center text-xs text-gray-400 mt-4">
+        Qummit • {{ request.url.scheme|default('http') }}://{{ request.url.hostname }}
+      </p>
+    </div>
+  </div>
+</body>
+</html>
